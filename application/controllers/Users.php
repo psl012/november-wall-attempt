@@ -40,7 +40,12 @@
         }
 
         public function register(){
-            $this->load->view("Users/register", array("register_errors" => REGISTER_ERRORS));
+            if($this->session->userdata(USER) === null){
+                $this->load->view("Users/register", array("register_errors" => REGISTER_ERRORS));
+            }
+            else{
+                redirect("/Walls/index");
+            }
         }
 
         public function create_user(){
