@@ -48,6 +48,26 @@
             return $this->db->query($query, $values);        
         }
 
+        public function edit_message($user, $message_details){
+            // Security Server side
+            $query = "SELECT * FROM messages where id = ?";
+            $values = array($this->security->xss_clean($message_details["message_id"]));
+            $message = $this->db->query($query, $values)->row_array();
+            if($message["user_id"] !== $user["user_id"]){
+                return;
+            }
+
+            $query = "UPDATE messages
+                        SET message = ?, updated_at = ?
+                        WHERE id = ?";
+
+            $values = array($this->security->xss_clean($message_details["new_message"]), 
+                            $this->security->xss_clean(date("Y-m-d, H:i:s")),
+                            $this->security->xss_clean($message_details["message_id"]));
+
+            return $this->db->query($query, $values);
+        }
+
         public function create_comments($user, $comment_details){
             $query = "INSERT INTO comments(message_id, user_id, comment, created_at, updated_at)
                         VALUES(?,?,?,?,?)";
@@ -57,6 +77,26 @@
                             $this->security->xss_clean(date("Y-m-d, H:i:s")),
                             $this->security->xss_clean(date("Y-m-d, H:i:s")));
             
+            return $this->db->query($query, $values);
+        }
+
+        public function edit_comment($user, $comment_details){
+            // Security Server side
+            $query = "SELECT * FROM comments where id = ?";
+            $values = array($this->security->xss_clean($comment_details["comments_id"]));
+            $message = $this->db->query($query, $values)->row_array();
+            if($message["user_id"] !== $user["user_id"]){
+                return;
+            }
+
+            $query = "UPDATE comments
+                        SET comment = ?, updated_at = ?
+                        WHERE id = ?";
+
+            $values = array($this->security->xss_clean($comment_details["new_comment"]), 
+                            $this->security->xss_clean(date("Y-m-d, H:i:s")),
+                            $this->security->xss_clean($comment_details["comments_id"]));
+
             return $this->db->query($query, $values);
         }
 

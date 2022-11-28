@@ -34,3 +34,18 @@ section{
     section .inside_comment{
         margin-left: 20px;
     }
+    section .edit_button{
+        display: inline-block;
+    }
+    section .delete_form{
+        display: inline-block;
+    }
+    .cancel_button{
+        display: none;
+    }
+    section .edit_form{
+        display: none;
+    }
+        section .edit_form div{
+            float: right;
+        }

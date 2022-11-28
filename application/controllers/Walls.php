@@ -37,5 +37,17 @@
             $this->Wall->delete_comments($this->session->userdata(USER), $comment_details["comment_id"]);
             redirect("/Walls/index");
         }
+
+        public function edit_message(){
+            $message_details = $this->input->post(NULL, true);
+            $this->Wall->edit_message($this->session->userdata(USER), $message_details);
+            redirect("/Walls/index");
+        }
+
+        public function edit_comment(){
+            $comment_details = $this->input->post(NULL, true);
+            $this->Wall->edit_comment($this->session->userdata(USER), $comment_details);
+            redirect("/Walls/index");
+        }
     }
 ?>
