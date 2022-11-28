@@ -15,7 +15,12 @@
         }
 
         public function post_message(){
-            $message_details = $this->input->post(NULL, true);    
+            $message_details = $this->input->post(NULL, true);   
+            $validation_result = $this->Wall->validate_message(); 
+            if($validation_result !== "valid"){
+                $this->session->set_flashdata("message_error", $validation_result);
+                redirect("/Walls/index");
+            }
             $this->Wall->create_message($this->session->userdata(USER), $message_details);     
             redirect("/Walls/index");
         }
@@ -28,6 +33,11 @@
 
         public function post_comment(){
             $comment_details = $this->input->post(NULL, true);
+            $validation_result = $this->Wall->validate_comment(); 
+            if($validation_result !== "valid"){
+                $this->session->set_flashdata("comment_error", $validation_result);
+                redirect("/Walls/index");
+            }
             $this->Wall->create_comments($this->session->userdata(USER), $comment_details);
             redirect("/Walls/index");
         }
@@ -40,12 +50,22 @@
 
         public function edit_message(){
             $message_details = $this->input->post(NULL, true);
+            $validation_result = $this->Wall->validate_edit_message(); 
+            if($validation_result !== "valid"){
+                $this->session->set_flashdata("message_error", $validation_result);
+                redirect("/Walls/index");
+            }
             $this->Wall->edit_message($this->session->userdata(USER), $message_details);
             redirect("/Walls/index");
         }
 
         public function edit_comment(){
             $comment_details = $this->input->post(NULL, true);
+            $validation_result = $this->Wall->validate_edit_comment(); 
+            if($validation_result !== "valid"){
+                $this->session->set_flashdata("comment_error", $validation_result);
+                redirect("/Walls/index");
+            }
             $this->Wall->edit_comment($this->session->userdata(USER), $comment_details);
             redirect("/Walls/index");
         }

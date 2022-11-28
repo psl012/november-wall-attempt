@@ -10,7 +10,7 @@
                 $(".edit_button").click(function(){
                     let current_text = $(this).parent(".message, .comment").children("p").text();
                     $(this).parent(".message, .comment").children("p").hide();
-                    $(this).siblings("div").children().children("textarea").val(current_text);
+                    $(this).siblings("div").children(".edit_form").children("textarea").val(current_text);
                     $(this).siblings().children(".edit_form").show();
                     $(this).siblings().children(".cancel_button").show();
                     $(this).siblings(".delete_form").hide();
@@ -37,6 +37,10 @@
                 </div>
             </header>
             <section>
+                <div class="error">
+                    <?=$this->session->flashdata("message_error")?>
+                    <?=$this->session->flashdata("comment_error")?>
+                </div>
                 <h2>Post a message</h2>
                 <form action="/Walls/post_message" method="POST">
                     <input type="hidden" name="<?=$this->security->get_csrf_token_name()?>" value="<?=$this->security->get_csrf_hash()?>" />

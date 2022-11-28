@@ -49,3 +49,7 @@ section{
         section .edit_form div{
             float: right;
         }
+
+.error p{
+    color: red;
+}

@@ -1,5 +1,10 @@
 <?php
     class Wall extends CI_Model{
+        public function __construct(){
+            parent::__construct();
+            $this->load->library("form_validation");
+        }
+
         public function get_all_message(){
             $query = "SELECT messages.id as message_id, user_id, message, messages.created_at,
                         first_name, last_name 
@@ -132,6 +137,41 @@
             }
 
             return $organized_contents;
+        }
+
+        public function validate_message(){
+            $this->form_validation->set_rules("message", "Message", "trim|required");
+            if($this->form_validation->run()){
+                return "valid";
+            }
+
+            return validation_errors();
+        }
+
+        public function validate_edit_message(){
+            $this->form_validation->set_rules("new_message", "Message", "trim|required");
+            if($this->form_validation->run()){
+                return "valid";
+            }
+
+            return validation_errors();
+        }
+
+        public function validate_comment(){
+            $this->form_validation->set_rules("comment_box", "Comment", "trim|required");
+            if($this->form_validation->run()){
+                return "valid";
+            }
+
+            return validation_errors();
+        }
+        public function validate_edit_comment(){
+            $this->form_validation->set_rules("new_comment", "Comment", "trim|required");
+            if($this->form_validation->run()){
+                return "valid";
+            }
+
+            return validation_errors();
         }
     }
 ?>
